@@ -13,7 +13,6 @@ import java.time.Duration;
 
 public class LoginPage {
     private static final String PAGE_URL = Config.LOGIN_PAGE_URL;
-    public static final String WRONG_USERNAME_PASSWORD_MESSAGE = "Wrong username or password!";
 
     private final WebDriver webDriver;
 
@@ -38,7 +37,7 @@ public class LoginPage {
     }
 
     public void openPage() {
-        webDriver.navigate().to(PAGE_URL);
+        this.webDriver.get(PAGE_URL);
     }
 
     public boolean isUrlLoaded() {
@@ -76,7 +75,7 @@ public class LoginPage {
             explicitWait.until(ExpectedConditions.visibilityOf(this.signInTitle));
             return this.signInTitle.getText();
         } catch (TimeoutException exception) {
-            System.out.println("[ERROR] Sign-in title did not load within timeout.");
+            System.out.println("[ERROR] Sign in title did not load within timeout.");
             return ""; // Return an empty string to indicate no text is found on the login form
         }
     }
@@ -96,7 +95,7 @@ public class LoginPage {
             signInMessageWait.until(ExpectedConditions.visibilityOf(this.signInMessage));
             return this.signInMessage.getText();
         } catch (TimeoutException exception) {
-            System.out.println("[WARNING] No sign-in message displayed. Exception: " + exception.getMessage());
+            System.out.println("[WARNING] No sign in message displayed. Exception: " + exception.getMessage());
             return "";  // Return an empty string to indicate no message is found
         }
     }
