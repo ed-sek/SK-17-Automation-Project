@@ -15,6 +15,7 @@ public class SignUpPage {
     public static final String PAGE_URL = Config.SIGNUP_PAGE_URL;
 
     private final WebDriver webDriver;
+    private final WebDriverWait wait;
 
     @FindBy(xpath = "//h4[@class='text-center mb-4']")
     private WebElement signUpTitle;
@@ -29,7 +30,6 @@ public class SignUpPage {
     @FindBy(xpath = "//input[@formcontrolname='birthDate']")
     private WebElement birthDateField;
 
-
     @FindBy(xpath = "//input[@formcontrolname='password']")
     private WebElement passwordField;
 
@@ -42,9 +42,9 @@ public class SignUpPage {
     @FindBy(id = "sign-in-button")
     private WebElement signInButton;
 
-
     public SignUpPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         PageFactory.initElements(webDriver, this);
     }
 
@@ -53,13 +53,11 @@ public class SignUpPage {
     }
 
     public boolean isUrlLoaded() {
-        WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
         try {
-            explicitWait.until(ExpectedConditions.urlToBe(PAGE_URL));
+            return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
         } catch (TimeoutException ex) {
             return false;
         }
-        return true;
     }
 
     public void populateUsername(String username) {
@@ -83,14 +81,11 @@ public class SignUpPage {
     }
 
     public String getSignUpFormText() {
-        WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
-
         try {
-            explicitWait.until(ExpectedConditions.visibilityOf(this.signUpTitle));
-            return this.signUpTitle.getText();
-        } catch (TimeoutException exception) {
-            System.out.println("[ERROR] Sign up title did not load within timeout.");
-            return ""; // Return an empty string to indicate no text is found on the register form
+            return wait.until(ExpectedConditions.visibilityOf(this.signUpTitle)).getText();
+        } catch (TimeoutException ex) {
+            System.out.println("[ERROR] Sign in title did not load within timeout.");
+            return ""; // Return an empty string to indicate no text is found on the login form
         }
     }
 }

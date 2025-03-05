@@ -13,10 +13,9 @@ import utils.Config;
 import java.time.Duration;
 
 public class SignUpTests {
-
     private WebDriver webDriver;
-    private SignUpPage signUpPage;
 
+    private SignUpPage signUpPage;
 
     @BeforeSuite
     protected final void setUpTestSuite() {
@@ -29,9 +28,10 @@ public class SignUpTests {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         this.webDriver.manage().window().maximize();
-        this.webDriver.navigate().to(Config.SIGNUP_PAGE_URL);
 
         this.signUpPage = new SignUpPage(this.webDriver);
+
+        this.webDriver.navigate().to(Config.SIGNUP_PAGE_URL);
     }
 
     @AfterSuite
@@ -51,5 +51,4 @@ public class SignUpTests {
         String expectedFormText = "Sign up";
         Assert.assertEquals(signUpPage.getSignUpFormText(), expectedFormText, "Sign up form is not displayed");
     }
-
 }

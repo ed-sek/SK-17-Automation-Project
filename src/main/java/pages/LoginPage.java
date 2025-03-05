@@ -15,24 +15,24 @@ public class LoginPage {
     private static final String PAGE_URL = Config.LOGIN_PAGE_URL;
 
     private final WebDriver webDriver;
+    private final WebDriverWait wait;
+    private final WebDriverWait shortWaitForMessage;
 
     @FindBy(id = "defaultLoginFormUsername")
     private WebElement usernameField;
-
     @FindBy(id = "defaultLoginFormPassword")
     private WebElement passwordField;
-
     @FindBy(id = "sign-in-button")
     private WebElement signInButton;
-
     @FindBy(xpath = "//p[@class='h4 mb-4']")
     private WebElement signInTitle;
-
     @FindBy(xpath = "//*[@class='toast-message ng-star-inserted']")
     private WebElement signInMessage;
 
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
+        this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
+        this.shortWaitForMessage = new WebDriverWait(webDriver, Duration.ofMillis(1500));
         PageFactory.initElements(webDriver, this);
     }
 
@@ -41,13 +41,11 @@ public class LoginPage {
     }
 
     public boolean isUrlLoaded() {
-        WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
         try {
-            explicitWait.until(ExpectedConditions.urlToBe(PAGE_URL));
+            return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
         } catch (TimeoutException ex) {
             return false;
         }
-        return true;
     }
 
     public void populateUsername(String username) {
@@ -69,31 +67,25 @@ public class LoginPage {
     }
 
     public String getSignInFormText() {
-        WebDriverWait explicitWait = new WebDriverWait(this.webDriver, Duration.ofSeconds(10));
-
         try {
-            explicitWait.until(ExpectedConditions.visibilityOf(this.signInTitle));
-            return this.signInTitle.getText();
-        } catch (TimeoutException exception) {
+            return wait.until(ExpectedConditions.visibilityOf(this.signInTitle)).getText();
+        } catch (TimeoutException ex) {
             System.out.println("[ERROR] Sign in title did not load within timeout.");
             return ""; // Return an empty string to indicate no text is found on the login form
         }
     }
 
     public boolean isOnSignInMessagePresent(String message) {
-        WebDriverWait signInMessageWait = new WebDriverWait(this.webDriver, Duration.ofMillis(1500));
         try {
-            return signInMessageWait.until(ExpectedConditions.textToBePresentInElement(this.signInMessage, message));
-        } catch (TimeoutException exception) {
+            return shortWaitForMessage.until(ExpectedConditions.textToBePresentInElement(this.signInMessage, message));
+        } catch (TimeoutException ex) {
             return false; // Sign-in message was not found
         }
     }
 
     public String getSignInMessage() {
-        WebDriverWait signInMessageWait = new WebDriverWait(this.webDriver, Duration.ofMillis(1500));
         try {
-            signInMessageWait.until(ExpectedConditions.visibilityOf(this.signInMessage));
-            return this.signInMessage.getText();
+            return shortWaitForMessage.until(ExpectedConditions.visibilityOf(this.signInMessage)).getText();
         } catch (TimeoutException exception) {
             System.out.println("[WARNING] No sign in message displayed. Exception: " + exception.getMessage());
             return "";  // Return an empty string to indicate no message is found

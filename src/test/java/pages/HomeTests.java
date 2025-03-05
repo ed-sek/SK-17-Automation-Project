@@ -1,6 +1,5 @@
 package pages;
 
-import ch.qos.logback.core.util.DatePatternToRegexUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,6 +14,7 @@ import java.time.Duration;
 
 public class HomeTests {
     private WebDriver webDriver;
+
     private HomePage homePage;
 
     @BeforeSuite
@@ -28,9 +28,10 @@ public class HomeTests {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         this.webDriver.manage().window().maximize();
-        this.webDriver.navigate().to(Config.HOME_PAGE_URL);
 
         this.homePage = new HomePage(this.webDriver);
+
+        this.webDriver.navigate().to(Config.HOME_PAGE_URL);
     }
 
     @AfterSuite

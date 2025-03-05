@@ -16,7 +16,8 @@ import java.util.Set;
 public class HeaderComponent {
     private final WebDriver webDriver;
 
-    private static final Set<String> VALID_MENU_OPTIONS = Set.of("login", "profile", "home", "homeIcon");
+    private static final Set<String> VALID_MENU_OPTIONS =
+            Set.of("home", "login", "profile", "homeIcon");
 
     @FindBy(id = "nav-link-home")
     private WebElement homeLink;
@@ -48,15 +49,12 @@ public class HeaderComponent {
     public void clickHome() {
         waitAndClick(homeLink);
     }
-
     public void clickLogin() {
         waitAndClick(loginLink);
     }
-
     public void clickProfile() {
         waitAndClick(profileLink);
     }
-
     public void clickHomeIcon() {
         waitAndClick(homeIcon);
     }
@@ -75,7 +73,8 @@ public class HeaderComponent {
         String menu = menuItem.toLowerCase();
 
         if (!VALID_MENU_OPTIONS.contains(menu)) {
-            throw new IllegalArgumentException("Invalid menu option: " + menuItem + ". Allowed values: " + VALID_MENU_OPTIONS);
+            throw new IllegalArgumentException("Invalid menu option: " + menuItem +
+                    ". Allowed values: " + VALID_MENU_OPTIONS);
         }
 
         WebElement elementToClick;

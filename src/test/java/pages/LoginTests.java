@@ -10,11 +10,10 @@ import utils.Config;
 import java.time.Duration;
 
 public class LoginTests {
-
     private WebDriver webDriver;
+
     private LoginPage loginPage;
     private HomePage homePage;
-    private HeaderComponent headerComponent;
 
     @BeforeSuite
     protected final void setUpTestSuite() {
@@ -27,9 +26,11 @@ public class LoginTests {
         this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         this.webDriver.manage().window().maximize();
-        this.webDriver.navigate().to(Config.LOGIN_PAGE_URL);
 
         this.loginPage = new LoginPage(this.webDriver);
+        this.homePage = new HomePage(this.webDriver);
+
+        this.webDriver.navigate().to(Config.LOGIN_PAGE_URL);
     }
 
     @AfterSuite
@@ -60,15 +61,11 @@ public class LoginTests {
 
     @Test
     public void loginWithValidCredentials() {
-        this.headerComponent = new HeaderComponent(this.webDriver);
-        this.homePage = new HomePage(this.webDriver);
-
         loginPage.performLogin(Config.VALID_USERNAME, Config.VALID_PASSWORD);
 
         String expectedMessage = "Successful login!";
         Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");
 
         Assert.assertTrue(homePage.isUrlLoaded(), "Home page is not loaded.");
-
     }
 }
