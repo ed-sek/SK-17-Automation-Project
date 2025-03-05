@@ -1,58 +1,40 @@
 package pages;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import utils.Config;
 
-import java.time.Duration;
-
-public class LoginTests {
-    private WebDriver webDriver;
-
-    private LoginPage loginPage;
-    private HomePage homePage;
-
-    @BeforeSuite
-    protected final void setUpTestSuite() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeMethod
-    protected final void setupTest() {
-        this.webDriver = new ChromeDriver();
-        this.webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
-        this.webDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        this.webDriver.manage().window().maximize();
-
-        this.loginPage = new LoginPage(this.webDriver);
-        this.homePage = new HomePage(this.webDriver);
-
-        this.webDriver.navigate().to(Config.LOGIN_PAGE_URL);
-    }
-
-    @AfterSuite
-    public void tearDownTestSuite() {
-        if (webDriver != null) {
-            webDriver.quit();
-        }
-    }
+public class LoginTests extends TestBase {
 
     @Test
     public void verifyLoginPageURLIsLoaded() {
+        WebDriver webDriver = getDriver();
+        LoginPage loginPage = new LoginPage(webDriver);
+
+        loginPage.openPage();
+
         Assert.assertTrue(loginPage.isUrlLoaded(), "The Login page is not loaded.");
     }
 
     @Test
     public void verifySignInFormIsDisplayed() {
+        WebDriver webDriver = getDriver();
+        LoginPage loginPage = new LoginPage(webDriver);
+
+        loginPage.openPage();
+
         String expectedFormText = "Sign in";
         Assert.assertEquals(loginPage.getSignInFormText(), expectedFormText, "Login form is not displayed");
     }
 
     @Test
     public void verifyErrorMessageForInvalidLogin() {
+        WebDriver webDriver = getDriver();
+        LoginPage loginPage = new LoginPage(webDriver);
+
+        loginPage.openPage();
+
         loginPage.performLogin(Config.INVALID_USERNAME, Config.INVALID_PASSWORD);
 
         String expectedMessage = "Wrong username or password!";
@@ -61,6 +43,12 @@ public class LoginTests {
 
     @Test
     public void loginWithValidCredentials() {
+        WebDriver webDriver = getDriver();
+        LoginPage loginPage = new LoginPage(webDriver);
+        HomePage homePage = new HomePage(webDriver);
+
+        loginPage.openPage();
+
         loginPage.performLogin(Config.VALID_USERNAME, Config.VALID_PASSWORD);
 
         String expectedMessage = "Successful login!";
