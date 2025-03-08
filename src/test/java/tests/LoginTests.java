@@ -1,8 +1,10 @@
-package pages;
+package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import pages.HomePage;
+import pages.LoginPage;
 import utils.Config;
 
 public class LoginTests extends TestBase {
@@ -37,7 +39,7 @@ public class LoginTests extends TestBase {
 
         loginPage.performLogin(Config.INVALID_USERNAME, Config.INVALID_PASSWORD);
 
-        String expectedMessage = "Wrong username or password!";
+        String expectedMessage = "Wrong username or password!!";
         Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");
     }
 
