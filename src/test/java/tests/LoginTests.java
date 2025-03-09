@@ -39,7 +39,7 @@ public class LoginTests extends TestBase {
 
         loginPage.performLogin(Config.INVALID_USERNAME, Config.INVALID_PASSWORD);
 
-        String expectedMessage = "Wrong username or password!!";
+        String expectedMessage = "Wrong username or password!";
         Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");
     }
 
