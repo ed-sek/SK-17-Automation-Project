@@ -15,7 +15,7 @@ public class HomePage {
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
-    //TODO add pagefactory locators here
+    // TODO: add pagefactory locators here
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;

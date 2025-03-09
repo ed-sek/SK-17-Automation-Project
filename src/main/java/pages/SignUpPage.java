@@ -26,7 +26,7 @@ public class SignUpPage {
     @FindBy(xpath = "//input[@formcontrolname='email']")
     private WebElement emailField;
 
-    //TODO implement improved locator for birthDate picker
+    // TODO: implement improved locator for birthDate picker
     @FindBy(xpath = "//input[@formcontrolname='birthDate']")
     private WebElement birthDateField;
 
