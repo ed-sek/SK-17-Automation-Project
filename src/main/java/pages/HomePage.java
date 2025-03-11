@@ -15,7 +15,7 @@ public class HomePage {
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
-    // TODO: add pagefactory locators here
+    // TODO: Implement PageFactory locators here for the elements
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -31,6 +31,7 @@ public class HomePage {
         try {
             return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
         } catch (TimeoutException ex) {
+            System.out.println("Timeout while waiting for URL to load: " + ex.getMessage());
             return false;
         }
     }

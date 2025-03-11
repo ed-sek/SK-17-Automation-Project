@@ -44,6 +44,7 @@ public class LoginPage {
         try {
             return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
         } catch (TimeoutException ex) {
+            System.out.println("Timeout while waiting for URL to load: " + ex.getMessage());
             return false;
         }
     }

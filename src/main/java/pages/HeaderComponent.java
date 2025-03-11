@@ -27,6 +27,8 @@ public class HeaderComponent {
     private WebElement profileLink;
     @FindBy(id = "homeIcon")
     private WebElement homeIcon;
+    @FindBy(id = "nav-link-new-post")
+    private WebElement newPostLink;
 
     public HeaderComponent(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -57,6 +59,9 @@ public class HeaderComponent {
     }
     public void clickHomeIcon() {
         waitAndClick(homeIcon);
+    }
+    public void clickNewPost() {
+        waitAndClick(newPostLink);
     }
 
     private void waitAndClick(WebElement element) {
