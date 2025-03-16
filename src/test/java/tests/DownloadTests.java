@@ -50,7 +50,7 @@ public class DownloadTests extends TestBase {
                 counter++;
             }
         } catch (InterruptedException e) {
-            System.out.println("Thread was interrupted while waiting for file download:" + e.getMessage());
+            System.out.println("Thread interrupted while waiting for file download. Exception: " + e.getMessage());
         }
 
         return false;

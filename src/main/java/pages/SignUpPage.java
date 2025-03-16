@@ -55,8 +55,8 @@ public class SignUpPage {
     public boolean isUrlLoaded() {
         try {
             return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
-        } catch (TimeoutException ex) {
-            System.out.println("Timeout while waiting for URL to load: " + ex.getMessage());
+        } catch (TimeoutException e) {
+            System.out.println("Timeout while waiting for URL to load. Exception: " + e.getMessage());
             return false;
         }
     }
@@ -84,9 +84,9 @@ public class SignUpPage {
     public String getSignUpFormText() {
         try {
             return wait.until(ExpectedConditions.visibilityOf(this.signUpTitle)).getText();
-        } catch (TimeoutException ex) {
-            System.out.println("[ERROR] Sign in title did not load within timeout.");
-            return ""; // Return an empty string to indicate no text is found on the login form
+        } catch (TimeoutException e) {
+            System.out.println("Timeout waiting for sign-up title to be visible. Exception: " + e.getMessage());
+            return ""; // Return an empty string to indicate no text is found on the signup form
         }
     }
 }

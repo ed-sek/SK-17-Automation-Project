@@ -20,7 +20,6 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public abstract class TestBase {
@@ -70,7 +69,7 @@ public abstract class TestBase {
             try {
                 this.webDriver.quit();
             } catch (Exception e) {
-                System.out.println("Error during WebDriver cleanup: " + e.getMessage());
+                System.out.println("Error during WebDriver cleanup. Exception: " + e.getMessage());
             }
         }
     }
@@ -90,7 +89,7 @@ public abstract class TestBase {
                 System.out.printf("Unable to delete the files in directory: %s%n%n", directory);
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while cleaning the directory: " + e.getMessage());
+            System.out.println("Error during directory cleaning. Exception: " + e.getMessage());
         }
     }
 
@@ -129,7 +128,7 @@ public abstract class TestBase {
                 FileUtils.copyFile(screenshot, new File(SCREENSHOT_DIR.concat(fileName)));
 
             } catch (IOException e) {
-                System.out.println("Unable to create a screenshot file: " + e.getMessage());
+                System.out.println("Error while taking screenshot. Exception: " + e.getMessage());
             }
         }
     }

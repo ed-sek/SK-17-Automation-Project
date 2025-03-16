@@ -42,8 +42,8 @@ public class PostPage {
     public boolean isUrlLoaded() {
         try {
             return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
-        } catch (TimeoutException ex) {
-            System.out.println("Timeout while waiting for URL to load: " + ex.getMessage());
+        } catch (TimeoutException e) {
+            System.out.println("Timeout while waiting for URL to load. Exception:  " + e.getMessage());
             return false;
         }
     }
@@ -53,8 +53,7 @@ public class PostPage {
             WebElement image = webDriver.findElement(By.xpath("//img[@class='image-preview']"));
             return wait.until(ExpectedConditions.visibilityOf(image)).isDisplayed();
         } catch (NoSuchElementException e) {
-            System.out.println("The image is not visible: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Image element not found. Exception: " + e.getMessage());
             return false;
         }
     }

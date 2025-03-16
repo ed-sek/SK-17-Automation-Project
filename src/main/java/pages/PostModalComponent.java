@@ -27,8 +27,7 @@ public class PostModalComponent {
             WebElement image = modalElement.findElement(By.xpath(".//div[@class='post-modal-img']/img"));
             return wait.until(ExpectedConditions.visibilityOf(image)).isDisplayed();
         } catch (NoSuchElementException e) {
-            System.out.println("The image is not visible: " + e.getMessage());
-            e.printStackTrace();
+            System.out.println("Image element not found. Exception: " + e.getMessage());
             return false;
         }
     }

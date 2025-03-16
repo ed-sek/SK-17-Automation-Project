@@ -41,7 +41,7 @@ public class HeaderComponent {
             try {
                 return webDriver.findElement(By.xpath("//button[@class='navbar-toggler']"));
             } catch (NoSuchElementException e) {
-                System.out.println("Conditional element not found: " + e.getMessage());
+                System.out.println("Navbar toggler button not found. Exception: " + e.getMessage());
                 return null;
             }
         }
@@ -70,8 +70,12 @@ public class HeaderComponent {
                     .until(ExpectedConditions.elementToBeClickable(element));
             element.click();
         } catch (TimeoutException e) {
-            throw new IllegalStateException("Header navigation link not found or not clickable: " + e.getMessage());
+            System.out.println("Timeout while waiting for element to become clickable: " + e.getMessage());
+
+            // Throwing IllegalStateException to halt execution when element isn't clickable, since TestNG asserts have 'test' scope
+            throw new IllegalStateException("Exception during element click operation. Exception: " + e.getMessage());
         }
+
     }
 
     public void clickMenuLink(String menuItem) {

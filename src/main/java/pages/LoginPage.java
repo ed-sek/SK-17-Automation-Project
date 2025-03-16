@@ -43,8 +43,8 @@ public class LoginPage {
     public boolean isUrlLoaded() {
         try {
             return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
-        } catch (TimeoutException ex) {
-            System.out.println("Timeout while waiting for URL to load: " + ex.getMessage());
+        } catch (TimeoutException e) {
+            System.out.println("Timeout while waiting for URL to load. Exception: " + e.getMessage());
             return false;
         }
     }
@@ -70,8 +70,8 @@ public class LoginPage {
     public String getSignInFormText() {
         try {
             return wait.until(ExpectedConditions.visibilityOf(this.signInTitle)).getText();
-        } catch (TimeoutException ex) {
-            System.out.println("[ERROR] Sign in title did not load within timeout.");
+        } catch (TimeoutException e) {
+            System.out.println("Timeout waiting for sign-in title to be visible. Exception: " + e.getMessage());
             return ""; // Return an empty string to indicate no text is found on the login form
         }
     }
@@ -79,7 +79,8 @@ public class LoginPage {
     public boolean isOnSignInMessagePresent(String message) {
         try {
             return shortWaitForMessage.until(ExpectedConditions.textToBePresentInElement(this.signInMessage, message));
-        } catch (TimeoutException ex) {
+        } catch (TimeoutException e) {
+            System.out.println("Timeout waiting for sign-in message text to appear. Exception: " + e.getMessage());
             return false; // Sign-in message was not found
         }
     }
@@ -87,8 +88,8 @@ public class LoginPage {
     public String getSignInMessage() {
         try {
             return shortWaitForMessage.until(ExpectedConditions.visibilityOf(this.signInMessage)).getText();
-        } catch (TimeoutException exception) {
-            System.out.println("[WARNING] No sign in message displayed. Exception: " + exception.getMessage());
+        } catch (TimeoutException e) {
+            System.out.println("Timeout waiting for sign-in message to be visible. Exception: " + e.getMessage());
             return "";  // Return an empty string to indicate no message is found
         }
     }
