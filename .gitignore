@@ -9,6 +9,12 @@ target/
 /src/test/resources/reports/*
 /src/test/resources/screenshot/*
 
+# Ignore the .gitkeep files after they are committed
+/src/test/resources/upload/.gitkeep
+/src/test/resources/download/.gitkeep
+/src/test/resources/reports/.gitkeep
+/src/test/resources/screenshot/.gitkeep
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
