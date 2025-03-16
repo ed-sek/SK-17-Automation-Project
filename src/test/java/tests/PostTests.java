@@ -3,10 +3,7 @@ package tests;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.HeaderComponent;
-import pages.HomePage;
-import pages.LoginPage;
-import pages.PostPage;
+import pages.*;
 import utils.Config;
 
 import java.io.File;
@@ -40,11 +37,17 @@ public class PostTests extends TestBase {
 
         postPage.uploadPicture(file);
         Assert.assertTrue(postPage.isImageVisible(), "The image is not visible!");
+
         Assert.assertEquals(file.getName(), postPage.getImageName(), "The image name is incorrect!");
+
         postPage.populatePostCaption(caption);
         postPage.clickCreatePost();
 
         // TODO: Implement validations here after creating ProfilePage page object
+
+        PostModalComponent postModal = new PostModalComponent(webDriver);
+        Assert.assertTrue(postModal.isImageVisible(), "The image is not visible!");
+        Assert.assertEquals(postModal.getPostUser(), username);
 
         // Temporary delay to allow post creation before WebDriver quits, until ProfilePage functionality is implemented.
         Thread.sleep(10000);

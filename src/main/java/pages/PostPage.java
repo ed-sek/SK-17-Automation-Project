@@ -55,6 +55,9 @@ public class PostPage {
         } catch (NoSuchElementException e) {
             System.out.println("Image element not found. Exception: " + e.getMessage());
             return false;
+        } catch (TimeoutException e) {
+            System.out.println("Image found but not visible within timeout. Exception: " + e.getMessage());
+            return false;
         }
     }
 
