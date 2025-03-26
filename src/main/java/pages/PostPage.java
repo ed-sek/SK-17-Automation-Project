@@ -8,25 +8,28 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Config;
+import static utils.Config.*;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+
 public class PostPage {
-    public static final String PAGE_URL = Config.POST_PAGE_URL;
+    public static final String PAGE_URL = POST_PAGE_URL;
 
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
+    @FindBy(xpath = "//img[@class='image-preview']")
+    private WebElement imagePreview;
     @FindBy(xpath = "//input[@class='form-control input-lg']")
-    private WebElement imageNameField;
+    private WebElement uploadImageNameField;
     @FindBy(xpath = "//input[contains(@class, 'file') and @type='file']")
     private WebElement uploadField;
-    @FindBy(name = "caption")
+    @FindBy(xpath = "//input[@name='caption']")
     private WebElement captionField;
-    @FindBy(id = "create-post")
+    @FindBy(xpath = "//button[@id='create-post']")
     private WebElement createPostButton;
 
     public PostPage(WebDriver webDriver) {
@@ -50,8 +53,7 @@ public class PostPage {
 
     public boolean isImageVisible() {
         try {
-            WebElement image = webDriver.findElement(By.xpath("//img[@class='image-preview']"));
-            return wait.until(ExpectedConditions.visibilityOf(image)).isDisplayed();
+            return wait.until(ExpectedConditions.visibilityOf(imagePreview)).isDisplayed();
         } catch (NoSuchElementException e) {
             System.out.println("Image element not found. Exception: " + e.getMessage());
             return false;
@@ -62,7 +64,7 @@ public class PostPage {
     }
 
     public String getImageName() {
-        return imageNameField.getDomAttribute("placeholder");
+        return uploadImageNameField.getDomAttribute("placeholder");
     }
 
     public void uploadPicture(File file) {

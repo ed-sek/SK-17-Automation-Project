@@ -15,7 +15,6 @@ public class HomePage {
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
-    // TODO: Implement PageFactory locators here for the elements
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;

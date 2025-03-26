@@ -7,16 +7,17 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Config;
+
+import static utils.Config.*;
 
 import java.time.Duration;
 
 public class LoginPage {
-    private static final String PAGE_URL = Config.LOGIN_PAGE_URL;
+    private static final String PAGE_URL = LOGIN_PAGE_URL;
 
     private final WebDriver webDriver;
     private final WebDriverWait wait;
-    private final WebDriverWait shortWaitForMessage;
+    private final WebDriverWait shortWait;
 
     @FindBy(id = "defaultLoginFormUsername")
     private WebElement usernameField;
@@ -32,7 +33,7 @@ public class LoginPage {
     public LoginPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
-        this.shortWaitForMessage = new WebDriverWait(webDriver, Duration.ofMillis(1500));
+        this.shortWait = new WebDriverWait(webDriver, Duration.ofMillis(1500));
         PageFactory.initElements(webDriver, this);
     }
 
@@ -61,7 +62,7 @@ public class LoginPage {
         this.signInButton.click();
     }
 
-    public void performLogin(String username, String password) {
+    public void performLogIn(String username, String password) {
         this.populateUsername(username);
         this.populatePassword(password);
         this.clickSignIn();
@@ -76,18 +77,17 @@ public class LoginPage {
         }
     }
 
-    public boolean isOnSignInMessagePresent(String message) {
+    public void verifySignInMessage(String message) throws Exception {
         try {
-            return shortWaitForMessage.until(ExpectedConditions.textToBePresentInElement(this.signInMessage, message));
-        } catch (TimeoutException e) {
-            System.out.println("Timeout waiting for sign-in message text to appear. Exception: " + e.getMessage());
-            return false; // Sign-in message was not found
+            shortWait.until(ExpectedConditions.textToBePresentInElement(this.signInMessage, message));
+        } catch (TimeoutException exception) {
+            throw new Exception("Sign in message is not present. Exception: " + exception.getMessage());
         }
     }
 
     public String getSignInMessage() {
         try {
-            return shortWaitForMessage.until(ExpectedConditions.visibilityOf(this.signInMessage)).getText();
+            return shortWait.until(ExpectedConditions.visibilityOf(this.signInMessage)).getText();
         } catch (TimeoutException e) {
             System.out.println("Timeout waiting for sign-in message to be visible. Exception: " + e.getMessage());
             return "";  // Return an empty string to indicate no message is found

@@ -7,6 +7,7 @@ public class Config {
     public static final String HOME_PAGE_URL = "http://training.skillo-bg.com:4300/posts/all";
     public static final String SIGNUP_PAGE_URL = "http://training.skillo-bg.com:4300/users/register";
     public static final String POST_PAGE_URL = "http://training.skillo-bg.com:4300/posts/create";
+    public static final String PROFILE_PAGE_URL_WITHOUT_USER_ID = "http://training.skillo-bg.com:4300/users/";
 
 
     // Credentials

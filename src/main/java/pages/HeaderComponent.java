@@ -19,16 +19,16 @@ public class HeaderComponent {
     private static final Set<String> VALID_MENU_OPTIONS =
             Set.of("home", "login", "profile", "homeIcon");
 
-    @FindBy(id = "nav-link-home")
-    private WebElement homeLink;
-    @FindBy(id = "nav-link-login")
-    private WebElement loginLink;
-    @FindBy(id = "nav-link-profile")
-    private WebElement profileLink;
     @FindBy(id = "homeIcon")
     private WebElement homeIcon;
+    @FindBy(id = "nav-link-home")
+    private WebElement homeLink;
+    @FindBy(id = "nav-link-profile")
+    private WebElement profileLink;
     @FindBy(id = "nav-link-new-post")
     private WebElement newPostLink;
+    @FindBy(id = "nav-link-login")
+    private WebElement loginLink;
 
     public HeaderComponent(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -51,15 +51,19 @@ public class HeaderComponent {
     public void clickHome() {
         waitAndClick(homeLink);
     }
+
     public void clickLogin() {
         waitAndClick(loginLink);
     }
+
     public void clickProfile() {
         waitAndClick(profileLink);
     }
+
     public void clickHomeIcon() {
         waitAndClick(homeIcon);
     }
+
     public void clickNewPost() {
         waitAndClick(newPostLink);
     }

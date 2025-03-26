@@ -17,13 +17,10 @@ public class PostModalComponent {
 
     @FindBy(xpath = "//div[@class='modal-dialog']")
     private WebElement modalElement;
-
     @FindBy(xpath = "//div[@class='post-modal-img']")
     private WebElement imagePostModal;
-
     @FindBy(xpath = "//div[@class='modal-dialog']//a[@class='post-user']")
     private WebElement postUser;
-
     @FindBy(xpath = "//div[@class='modal-dialog']//div[@class='post-title']")
     private WebElement postTitle;
 
