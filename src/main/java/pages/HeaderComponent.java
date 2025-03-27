@@ -19,14 +19,16 @@ public class HeaderComponent {
     private static final Set<String> VALID_MENU_OPTIONS =
             Set.of("home", "login", "profile", "homeIcon");
 
-    @FindBy(id = "nav-link-home")
-    private WebElement homeLink;
-    @FindBy(id = "nav-link-login")
-    private WebElement loginLink;
-    @FindBy(id = "nav-link-profile")
-    private WebElement profileLink;
     @FindBy(id = "homeIcon")
     private WebElement homeIcon;
+    @FindBy(id = "nav-link-home")
+    private WebElement homeLink;
+    @FindBy(id = "nav-link-profile")
+    private WebElement profileLink;
+    @FindBy(id = "nav-link-new-post")
+    private WebElement newPostLink;
+    @FindBy(id = "nav-link-login")
+    private WebElement loginLink;
 
     public HeaderComponent(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -39,7 +41,7 @@ public class HeaderComponent {
             try {
                 return webDriver.findElement(By.xpath("//button[@class='navbar-toggler']"));
             } catch (NoSuchElementException e) {
-                System.out.println("Conditional element not found: " + e.getMessage());
+                System.out.println("Navbar toggler button not found. Exception: " + e.getMessage());
                 return null;
             }
         }
@@ -49,14 +51,21 @@ public class HeaderComponent {
     public void clickHome() {
         waitAndClick(homeLink);
     }
+
     public void clickLogin() {
         waitAndClick(loginLink);
     }
+
     public void clickProfile() {
         waitAndClick(profileLink);
     }
+
     public void clickHomeIcon() {
         waitAndClick(homeIcon);
+    }
+
+    public void clickNewPost() {
+        waitAndClick(newPostLink);
     }
 
     private void waitAndClick(WebElement element) {
@@ -65,8 +74,12 @@ public class HeaderComponent {
                     .until(ExpectedConditions.elementToBeClickable(element));
             element.click();
         } catch (TimeoutException e) {
-            throw new IllegalStateException("Header navigation link not found or not clickable: " + e.getMessage());
+            System.out.println("Timeout while waiting for element to become clickable: " + e.getMessage());
+
+            // Throwing IllegalStateException to halt execution when element isn't clickable, since TestNG asserts have 'test' scope
+            throw new IllegalStateException("Exception during element click operation. Exception: " + e.getMessage());
         }
+
     }
 
     public void clickMenuLink(String menuItem) {

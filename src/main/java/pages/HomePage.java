@@ -5,17 +5,17 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Config;
 
 import java.time.Duration;
 
+import static utils.Config.*;
+
 public class HomePage {
-    public static final String PAGE_URL = Config.HOME_PAGE_URL;
+    public static final String PAGE_URL = HOME_PAGE_URL;
 
     private final WebDriver webDriver;
     private final WebDriverWait wait;
 
-    //TODO add pagefactory locators here
 
     public HomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -30,7 +30,8 @@ public class HomePage {
     public boolean isUrlLoaded() {
         try {
             return wait.until(ExpectedConditions.urlToBe(PAGE_URL));
-        } catch (TimeoutException ex) {
+        } catch (TimeoutException e) {
+            System.out.println("Timeout while waiting for URL to load. Exception: " + e.getMessage());
             return false;
         }
     }
