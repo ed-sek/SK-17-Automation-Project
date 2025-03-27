@@ -16,4 +16,11 @@ public class Config {
     public static final String INVALID_USERNAME = "PeterPan";
     public static final String INVALID_PASSWORD = "Neverland321";
 
+    // Directories paths
+    public static final String TEST_RESOURCES_DIR = "src\\test\\resources\\";
+    public static final String REPORTS_DIR = TEST_RESOURCES_DIR.concat("reports\\");
+    public static final String DOWNLOAD_DIR = TEST_RESOURCES_DIR.concat("download\\");
+    public static final String SCREENSHOT_DIR = TEST_RESOURCES_DIR.concat("screenshot\\");
+    public static final String UPLOAD_DIR = TEST_RESOURCES_DIR.concat("upload\\");
+
 }

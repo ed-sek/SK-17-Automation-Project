@@ -5,7 +5,8 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
 import pages.LoginPage;
-import utils.Config;
+
+import static utils.Config.*;
 
 public class LoginTests extends TestBase {
 
@@ -37,7 +38,7 @@ public class LoginTests extends TestBase {
 
         loginPage.openPage();
 
-        loginPage.performLogIn(Config.INVALID_USERNAME, Config.INVALID_PASSWORD);
+        loginPage.performLogIn(INVALID_USERNAME, INVALID_PASSWORD);
 
         String expectedMessage = "Wrong username or password!";
         Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");
@@ -51,7 +52,7 @@ public class LoginTests extends TestBase {
 
         loginPage.openPage();
 
-        loginPage.performLogIn(Config.VALID_USERNAME, Config.VALID_PASSWORD);
+        loginPage.performLogIn(VALID_USERNAME, VALID_PASSWORD);
 
         String expectedMessage = "Successful login!";
         Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");

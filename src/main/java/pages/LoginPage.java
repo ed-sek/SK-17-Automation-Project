@@ -8,9 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static utils.Config.*;
-
 import java.time.Duration;
+
+import static utils.Config.*;
 
 public class LoginPage {
     private static final String PAGE_URL = LOGIN_PAGE_URL;

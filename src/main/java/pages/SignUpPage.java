@@ -8,9 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static utils.Config.*;
-
 import java.time.Duration;
+
+import static utils.Config.*;
 
 public class SignUpPage {
     public static final String PAGE_URL = SIGNUP_PAGE_URL;
@@ -24,7 +24,6 @@ public class SignUpPage {
     private WebElement usernameField;
     @FindBy(xpath = "//input[@formcontrolname='email']")
     private WebElement emailField;
-    // TODO: implement improved locator for birthDate picker
     @FindBy(xpath = "//input[@formcontrolname='birthDate']")
     private WebElement birthDateField;
     @FindBy(xpath = "//input[@formcontrolname='password']")

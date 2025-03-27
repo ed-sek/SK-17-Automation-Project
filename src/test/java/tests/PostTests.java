@@ -53,5 +53,4 @@ public class PostTests extends TestBase {
         Assert.assertEquals(postModal.getPostUser(), VALID_USERNAME);
 
     }
-
 }

@@ -8,12 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import static utils.Config.*;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+import static utils.Config.*;
 
 public class PostPage {
     public static final String PAGE_URL = POST_PAGE_URL;

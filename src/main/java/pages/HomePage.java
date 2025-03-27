@@ -5,12 +5,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.Config;
 
 import java.time.Duration;
 
+import static utils.Config.*;
+
 public class HomePage {
-    public static final String PAGE_URL = Config.HOME_PAGE_URL;
+    public static final String PAGE_URL = HOME_PAGE_URL;
 
     private final WebDriver webDriver;
     private final WebDriverWait wait;
