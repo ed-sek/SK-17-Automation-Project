@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,10 +13,9 @@ import java.time.Duration;
 
 import static utils.Config.*;
 
-public class LoginPage {
+public class LoginPage extends HeaderComponent {
     private static final String PAGE_URL = LOGIN_PAGE_URL;
 
-    private final WebDriver webDriver;
     private final WebDriverWait wait;
     private final WebDriverWait shortWait;
 
@@ -27,11 +27,12 @@ public class LoginPage {
     private WebElement signInButton;
     @FindBy(xpath = "//p[@class='h4 mb-4']")
     private WebElement signInTitle;
-    @FindBy(xpath = "//*[@class='toast-message ng-star-inserted']")
-    private WebElement signInMessage;
+
+    private static final By toastMessageLocator = By.xpath
+            ("//div[@class='toast-message ng-star-inserted']");
 
     public LoginPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+        super(webDriver);
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         this.shortWait = new WebDriverWait(webDriver, Duration.ofMillis(1500));
         PageFactory.initElements(webDriver, this);
@@ -68,28 +69,11 @@ public class LoginPage {
         this.clickSignIn();
     }
 
-    public String getSignInFormText() {
+    public String getToastMessage() {
         try {
-            return wait.until(ExpectedConditions.visibilityOf(this.signInTitle)).getText();
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(toastMessageLocator)).getText();
         } catch (TimeoutException e) {
-            System.out.println("Timeout waiting for sign-in title to be visible. Exception: " + e.getMessage());
-            return ""; // Return an empty string to indicate no text is found on the login form
-        }
-    }
-
-    public void verifySignInMessage(String message) throws Exception {
-        try {
-            shortWait.until(ExpectedConditions.textToBePresentInElement(this.signInMessage, message));
-        } catch (TimeoutException exception) {
-            throw new Exception("Sign in message is not present. Exception: " + exception.getMessage());
-        }
-    }
-
-    public String getSignInMessage() {
-        try {
-            return shortWait.until(ExpectedConditions.visibilityOf(this.signInMessage)).getText();
-        } catch (TimeoutException e) {
-            System.out.println("Timeout waiting for sign-in message to be visible. Exception: " + e.getMessage());
+            System.out.println("Timeout waiting for toast message to be visible. Exception: " + e.getMessage());
             return "";  // Return an empty string to indicate no message is found
         }
     }

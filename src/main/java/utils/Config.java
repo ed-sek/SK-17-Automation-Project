@@ -11,8 +11,14 @@ public class Config {
 
 
     // Credentials
-    public static final String VALID_USERNAME = "PeterParker";
-    public static final String VALID_PASSWORD = "WebWebWeb3";
+    public static final String VALID_USERNAME_1 = "TonyStark";
+    public static final String VALID_PASSWORD_1 = "IronIronIron3";
+    public static final int VALID_USER_ID_1 = 9392;
+    public static final String VALID_USERNAME_2 = "BruceWayne";
+    public static final String VALID_PASSWORD_2 = "BatBatBat3";
+    public static final int VALID_USER_ID_2 = 9391;
+    public static final String VALID_USERNAME_3 = "PeterParker";
+    public static final int VALID_USER_ID_3 = 9223;
     public static final String INVALID_USERNAME = "PeterPan";
     public static final String INVALID_PASSWORD = "Neverland321";
 

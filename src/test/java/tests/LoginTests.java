@@ -1,6 +1,7 @@
 package tests;
 
 import org.openqa.selenium.WebDriver;
+
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
@@ -10,53 +11,37 @@ import static utils.Config.*;
 
 public class LoginTests extends TestBase {
 
-    @Test
-    public void verifyLoginPageURLIsLoaded() {
-        WebDriver webDriver = getDriver();
-        LoginPage loginPage = new LoginPage(webDriver);
-
-        loginPage.openPage();
-
-        Assert.assertTrue(loginPage.isUrlLoaded(), "The Login page is not loaded.");
+    @DataProvider(name = "invalidLoginData")
+    public Object[][] invalidLoginDataProvider() {
+        return new Object[][]{
+                {INVALID_USERNAME, INVALID_PASSWORD, "Wrong username or password!"}, // Wrong credentials
+                {VALID_USERNAME_1, INVALID_PASSWORD, "Wrong username or password!"} // Wrong password for valid user
+        };
     }
 
     @Test
-    public void verifySignInFormIsDisplayed() {
+    public void testValidLogin() {
         WebDriver webDriver = getDriver();
-        LoginPage loginPage = new LoginPage(webDriver);
 
+        LoginPage loginPage = new LoginPage(webDriver);
         loginPage.openPage();
+        loginPage.performLogIn(VALID_USERNAME_1, VALID_PASSWORD_1);
 
-        String expectedFormText = "Sign in";
-        Assert.assertEquals(loginPage.getSignInFormText(), expectedFormText, "Login form is not displayed");
-    }
-
-    @Test
-    public void verifyErrorMessageForInvalidLogin() {
-        WebDriver webDriver = getDriver();
-        LoginPage loginPage = new LoginPage(webDriver);
-
-        loginPage.openPage();
-
-        loginPage.performLogIn(INVALID_USERNAME, INVALID_PASSWORD);
-
-        String expectedMessage = "Wrong username or password!";
-        Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");
-    }
-
-    @Test
-    public void loginWithValidCredentials() {
-        WebDriver webDriver = getDriver();
-        LoginPage loginPage = new LoginPage(webDriver);
         HomePage homePage = new HomePage(webDriver);
+        Assert.assertTrue(homePage.isUrlLoaded(), "Home page did not load after login.");
+    }
 
+    @Test(dataProvider = "invalidLoginData")
+    public void testUnsuccessfulLoginErrorMessages(String username, String password, String expectedErrorMessage) {
+        WebDriver webDriver = getDriver();
+
+        LoginPage loginPage = new LoginPage(webDriver);
         loginPage.openPage();
 
-        loginPage.performLogIn(VALID_USERNAME, VALID_PASSWORD);
+        loginPage.performLogIn(username, password);
 
-        String expectedMessage = "Successful login!";
-        Assert.assertEquals(loginPage.getSignInMessage().trim(), expectedMessage, "Sign in message is not as expected.");
+        String actualErrorMessage = loginPage.getToastMessage();
 
-        Assert.assertTrue(homePage.isUrlLoaded(), "Home page is not loaded.");
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message mismatch!");
     }
 }

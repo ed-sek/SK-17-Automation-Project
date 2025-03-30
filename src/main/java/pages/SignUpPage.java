@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,10 +13,9 @@ import java.time.Duration;
 
 import static utils.Config.*;
 
-public class SignUpPage {
+public class SignUpPage extends HeaderComponent {
     public static final String PAGE_URL = SIGNUP_PAGE_URL;
 
-    private final WebDriver webDriver;
     private final WebDriverWait wait;
 
     @FindBy(xpath = "//h4[@class='text-center mb-4']")
@@ -35,8 +35,11 @@ public class SignUpPage {
     @FindBy(xpath = "//button[@id='sign-in-button']")
     private WebElement signInButton;
 
+    private static final By toastMessageLocator = By.xpath
+            ("//div[@class='toast-message ng-star-inserted']");
+
     public SignUpPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+        super(webDriver);
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         PageFactory.initElements(webDriver, this);
     }
@@ -74,12 +77,20 @@ public class SignUpPage {
         this.publicInfoField.sendKeys(publicInfo);
     }
 
-    public String getSignUpFormText() {
+    public void populateBirthDate(String birthDate) {
+        this.birthDateField.sendKeys(birthDate);
+    }
+
+    public void clickSignIn() {
+        this.signInButton.click();
+    }
+
+    public String getToastMessage() {
         try {
-            return wait.until(ExpectedConditions.visibilityOf(this.signUpTitle)).getText();
+            return wait.until(ExpectedConditions.visibilityOfElementLocated(toastMessageLocator)).getText();
         } catch (TimeoutException e) {
-            System.out.println("Timeout waiting for sign-up title to be visible. Exception: " + e.getMessage());
-            return "";
+            System.out.println("Timeout waiting for toast message to be visible. Exception: " + e.getMessage());
+            return "";  // Return an empty string to indicate no message is found
         }
     }
 }

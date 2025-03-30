@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,10 +14,9 @@ import java.util.NoSuchElementException;
 
 import static utils.Config.*;
 
-public class PostPage {
+public class PostPage extends HeaderComponent{
     public static final String PAGE_URL = POST_PAGE_URL;
 
-    private final WebDriver webDriver;
     private final WebDriverWait wait;
 
     @FindBy(xpath = "//img[@class='image-preview']")
@@ -33,7 +31,7 @@ public class PostPage {
     private WebElement createPostButton;
 
     public PostPage(WebDriver webDriver) {
-        this.webDriver = webDriver;
+        super(webDriver);
         this.wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         PageFactory.initElements(webDriver, this);
     }
