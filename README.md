@@ -55,7 +55,7 @@ This project is an automation framework for testing the iSkillo web application.
 
 1. **Prerequisites**:
     - Java (version 23) and Maven installed.
-    - Chrome browsers.
+    - Chrome browser.
 
 2. **Setup**:
     - Clone the repository.
@@ -87,4 +87,4 @@ The project includes several test classes to verify different functionalities:
 - **Shared TestBase**: Centralizes setup and teardown logic, including WebDriver management and screenshot capture.
 - **Dynamic Data Generation**: Uses unique timestamps in test data (e.g., for public info updates and registration) to ensure data uniqueness.
 
-#### Revision: 2025-03-30
+#### Revision: 2025-03-31

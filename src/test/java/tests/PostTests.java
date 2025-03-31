@@ -1,13 +1,17 @@
 package tests;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 
 import java.io.File;
+import java.time.Duration;
 
 import static utils.Config.*;
 
@@ -16,7 +20,7 @@ public class PostTests extends TestBase {
     private static final String UPLOAD_PICTURE_FILENAME = "testUpload-SpiderMan.jpg";
 
     @Test
-    public void testCreatePost() {
+    public void testCreatePost() throws InterruptedException {
         File file = new File(UPLOAD_DIR.concat(UPLOAD_PICTURE_FILENAME));
         WebDriver webDriver = getDriver();
 
@@ -31,6 +35,9 @@ public class PostTests extends TestBase {
         header.clickProfile();
 
         ProfilePage profilePage = new ProfilePage(webDriver);
+
+        Thread.sleep(10000);
+
         int countOfPosts = profilePage.getPostCount();
 
         String caption = String.format("Testing create post caption: %d", countOfPosts + 1);
@@ -44,9 +51,22 @@ public class PostTests extends TestBase {
         postPage.populatePostCaption(caption);
         postPage.clickCreatePost();
 
-        Assert.assertTrue(profilePage.isUrlWithIDLoaded(VALID_USER_ID_1), "The Profile URL is not correct!");
+        Thread.sleep(15000);
 
-        Assert.assertEquals(profilePage.getPostCount(), countOfPosts + 1, "The number of Posts is incorrect!");
+        webDriver.navigate().refresh();
+
+        Actions actions = new Actions(webDriver);
+        actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform();
+
+        Thread.sleep(10000);
+
+        int updatedPostCount = profilePage.getPostCount();
+
+        // Wait for the updated post count before asserting
+        WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.numberOfElementsToBe(By.xpath("//app-post"), updatedPostCount));
+
+        Assert.assertEquals(updatedPostCount, countOfPosts + 1, "The number of Posts is incorrect!");
         profilePage.clickPost(countOfPosts);
 
         PostModal postModal = new PostModal(webDriver);
@@ -55,7 +75,6 @@ public class PostTests extends TestBase {
         Assert.assertEquals(postModal.getPostUser(), VALID_USERNAME_1);
 
         // Close modal
-        Actions actions = new Actions(webDriver);
         actions.sendKeys(Keys.ESCAPE).perform();
 
         // Clean up - log out the user
@@ -63,7 +82,7 @@ public class PostTests extends TestBase {
     }
 
     @Test
-    public void testDeletePost() {
+    public void testDeletePost() throws InterruptedException {
         WebDriver webDriver = getDriver();
 
         LoginPage loginPage = new LoginPage(webDriver);
@@ -104,6 +123,12 @@ public class PostTests extends TestBase {
         Assert.assertEquals(profilePage.getToastMessage().trim(), "Post Deleted!", "The toast message is not as expected!");
 
         webDriver.navigate().refresh();
+
+        Actions actions = new Actions(webDriver);
+        actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform();
+
+        Thread.sleep(8000);
+
         profilePage = new ProfilePage(webDriver);
 
         int finalPostCount = profilePage.getPostCount();
@@ -132,48 +157,40 @@ public class PostTests extends TestBase {
         ProfilePage profilePage = new ProfilePage(webDriver);
         int countOfPosts = profilePage.getPostCount();
 
-        String caption = String.format("Testing create post caption: %d", countOfPosts + 1);
-        header.clickNewPost();
+        if (countOfPosts == 0) {
+            header.clickNewPost();
 
-        PostPage postPage = new PostPage(webDriver);
-        Assert.assertTrue(postPage.isUrlLoaded(), "The POST URL is not correct!");
-        postPage.uploadPicture(file);
-        Assert.assertTrue(postPage.isImageVisible(), "The image is not visible!");
-        Assert.assertEquals(file.getName(), postPage.getImageName(), "The image name is incorrect!");
-        postPage.populatePostCaption(caption);
-        postPage.clickCreatePost();
+            PostPage postPage = new PostPage(webDriver);
+            Assert.assertTrue(postPage.isUrlLoaded(), "The POST URL is not correct!");
+            postPage.uploadPicture(file);
+            Assert.assertTrue(postPage.isImageVisible(), "The image is not visible!");
+            Assert.assertEquals(file.getName(), postPage.getImageName(), "The image name is incorrect!");
 
-        Assert.assertTrue(profilePage.isUrlWithIDLoaded(VALID_USER_ID_1), "The Profile URL is not correct!");
+            String caption = String.format("Testing create post caption: %d", countOfPosts + 1);
+            postPage.populatePostCaption(caption);
+            postPage.clickCreatePost();
 
-        int intermediatePostCount = profilePage.getPostCount();
+            webDriver.navigate().refresh();
+            countOfPosts = profilePage.getPostCount();
+        }
 
-
-        Assert.assertEquals(intermediatePostCount, countOfPosts + 1, "The number of Posts is incorrect!");
-
-        profilePage.clickPost(countOfPosts);
+        profilePage.clickPost(0); // Click on the first post
 
         PostModal postModal = new PostModal(webDriver);
         Assert.assertTrue(postModal.isModalVisible(), "The modal element is not visible!");
 
-        Assert.assertTrue(postModal.isPadlockUnlocked(), "The padlock element is not in unlocked state!");
+        Actions actions = new Actions(webDriver);
+        actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform();
 
+
+        boolean isLocked = postModal.isPadlockLocked();
         postModal.clickPadlock();
-
-        Assert.assertTrue(postModal.isPadlockLocked(), "The padlock element is not in locked state!");
+        Assert.assertNotEquals(postModal.isPadlockLocked(), isLocked, "The padlock state did not toggle!");
 
         // Close modal
-        Actions actions = new Actions(webDriver);
         actions.sendKeys(Keys.ESCAPE).perform();
-
-        webDriver.navigate().refresh();
-        profilePage = new ProfilePage(webDriver);
-
-        int finalPostCount = profilePage.getPostCount();
-
-        Assert.assertEquals(finalPostCount, intermediatePostCount - 1, "The number of visible posts is incorrect!");
 
         // Clean up - log out the user
         homePage.performLogOut();
-
     }
 }

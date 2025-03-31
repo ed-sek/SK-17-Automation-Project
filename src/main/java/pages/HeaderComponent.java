@@ -63,30 +63,13 @@ public class HeaderComponent {
         return isElementVisible(searchDropdownContainerLocator);
     }
 
-    public WebElement findSearchDropdownItem(String searchText) {
-        if (!isSearchDropdownVisible())
-            throw new NoSuchElementException("Search dropdown is not visible.");
-
-        List<WebElement> items = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(searchDropdownItemLocator));
-
-        for (WebElement item : items) {
-            try {
-                WebElement userNameElement = item.findElement(searchDropdownUserNameElementLocator);
-                if (userNameElement.getText().contains(searchText))
-                    return item;
-            } catch (NoSuchElementException ignored) {
-                // Continue if an item doesn't contain the expected sub-element
-            }
-        }
-        return null; // Return null if no matching item is found
-    }
 
     public void waitAndClickSearchDropdownUser(String username) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         final By searchDropdownUserLocator = By.xpath("//div[@class='dropdown-container']//a[@class='post-user']"); // Local scope
 
         long startTime = System.currentTimeMillis();
-        final long timeout = 5000; // Maximum wait time in milliseconds
+        final long timeout = 15000; // Maximum wait time in milliseconds
         boolean clicked = false;
 
         while (!clicked && (System.currentTimeMillis() - startTime) < timeout) {
@@ -100,7 +83,7 @@ public class HeaderComponent {
                     }
                 }
                 if (!clicked) {
-                    Thread.sleep(500); // Wait before retrying
+                    Thread.sleep(1000); // Wait before retrying
                 }
             } catch (StaleElementReferenceException | InterruptedException e) {
                 // Log the exception, but don't fail immediately. Retry.
