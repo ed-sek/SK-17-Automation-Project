@@ -3,17 +3,19 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Ignore the contents of the following folders cotaining temporary or generated files but keep the folder structure
+# Ignore contents but keep folders with .gitkeep
 /src/test/resources/upload/*
-/src/test/resources/download/*
-/src/test/resources/reports/*
-/src/test/resources/screenshot/*
+!/src/test/resources/upload/.gitkeep
+!/src/test/resources/upload/testUpload-SpiderMan.jpg
 
-# Ignore the .gitkeep files after they are committed
-/src/test/resources/upload/.gitkeep
-/src/test/resources/download/.gitkeep
-/src/test/resources/reports/.gitkeep
-/src/test/resources/screenshot/.gitkeep
+/src/test/resources/download/*
+!/src/test/resources/download/.gitkeep
+
+/src/test/resources/reports/*
+!/src/test/resources/reports/.gitkeep
+
+/src/test/resources/screenshot/*
+!/src/test/resources/screenshot/.gitkeep
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

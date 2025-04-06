@@ -76,13 +76,21 @@ public abstract class TestBase {
         Assert.assertTrue(directory.isDirectory(), "Invalid directory.");
 
         try {
-            FileUtils.cleanDirectory(directory);
+            File[] files = directory.listFiles();
 
-            String[] fileList = directory.list();
-            if (fileList != null && fileList.length == 0) {
-                System.out.printf("[STATUS] All files are deleted in directory: %s%n%n", directory);
-            } else {
-                System.out.printf("Unable to delete the files in directory: %s%n%n", directory);
+            if (files != null) {
+                for (File file : files) {
+                    String fileName = file.getName();
+
+                    // Skipping files we want to keep
+                    if (fileName.equals(".gitkeep") || fileName.equals("testUpload-SpiderMan.jpg")) {
+                        continue;
+                    }
+
+                    FileUtils.forceDelete(file);
+                }
+
+                System.out.printf("[STATUS] Cleaned directory (excluding .gitkeep): %s%n%n", directoryPath);
             }
         } catch (IOException e) {
             System.out.println("Error during directory cleaning. Exception: " + e.getMessage());
