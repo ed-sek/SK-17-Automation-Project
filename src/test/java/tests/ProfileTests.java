@@ -74,7 +74,6 @@ public class ProfileTests extends TestBase {
 
         Assert.assertTrue(profilePage.isPublicInfoAsExpected(newPublicInfo), "The public info is not updated!");
 
-
         // Close modal
         Actions actions = new Actions(webDriver);
         actions.sendKeys(Keys.ESCAPE).perform();

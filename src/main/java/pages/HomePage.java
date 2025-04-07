@@ -11,7 +11,7 @@ import java.time.Duration;
 
 import static utils.Config.*;
 
-public class HomePage extends HeaderComponent{
+public class HomePage extends HeaderComponent {
     public static final String PAGE_URL = HOME_PAGE_URL;
 
     private final WebDriverWait wait;

@@ -38,7 +38,8 @@ This project is an automation framework for testing the iSkillo web application.
 │   │           ├── screenshot
 │   │           ├── upload
 │   │           │   └── testUpload-SpiderMan.jpg
-│   │           └── testng.xml
+│   │           ├── testng.xml
+│   │           └── testng-parallel.xml
 │   ├── .gitignore
 │   ├── pom.xml
 │   └── README.md
@@ -63,7 +64,8 @@ This project is an automation framework for testing the iSkillo web application.
 
 3. **Run Tests**:
     - Execute `mvn clean test` from the project root.
-    - TestNG will run all tests as defined in `testng.xml`.
+    - TestNG will run all test classes as defined in `testng.xml` in consecutive order.
+    - TestNG will run all test classes as defined in `testng-parallel.xml` in parallel.
 
 4. **Test Reports and Screenshots**:
     - Test reports, screenshots, and logs will be generated in the respective directories under `src/test/resources`.
@@ -86,5 +88,6 @@ The project includes several test classes to verify different functionalities:
 - **Page Object Model (POM)**: Encapsulates UI interactions in reusable page objects.
 - **Shared TestBase**: Centralizes setup and teardown logic, including WebDriver management and screenshot capture.
 - **Dynamic Data Generation**: Uses unique timestamps in test data (e.g., for public info updates and registration) to ensure data uniqueness.
+- **Parallel Execution**: Supports running tests in parallel for faster execution and scalability.
 
-#### Revision: 2025-03-31
+#### Revision: 2025-04-07

@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
 
 import static utils.Config.*;
 
-public class PostPage extends HeaderComponent{
+public class PostPage extends HeaderComponent {
     public static final String PAGE_URL = POST_PAGE_URL;
 
     private final WebDriverWait wait;

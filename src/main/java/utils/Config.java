@@ -9,7 +9,6 @@ public class Config {
     public static final String POST_PAGE_URL = "http://training.skillo-bg.com:4300/posts/create";
     public static final String PROFILE_PAGE_URL_WITHOUT_USER_ID = "http://training.skillo-bg.com:4300/users/";
 
-
     // Credentials
     public static final String VALID_USERNAME_1 = "TonyStark";
     public static final String VALID_PASSWORD_1 = "IronIronIron3";

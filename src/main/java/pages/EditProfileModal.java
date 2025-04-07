@@ -5,9 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-
 public class EditProfileModal extends HeaderComponent {
-
 
     @FindBy(xpath = "//app-edit-profile-modal")
     private WebElement editProfileModal;

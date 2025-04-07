@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="AllTestsSuite">
-    <test name="AllTests">
+<suite name="AllTestsSuite-parallel" parallel="classes" thread-count="2">
+    <test name="AllTests-parallel">
         <classes>
             <class name="tests.LoginTests"/>
             <class name="tests.PostTests"/>

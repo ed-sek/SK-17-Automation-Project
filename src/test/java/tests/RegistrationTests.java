@@ -10,7 +10,7 @@ import java.util.Locale;
 public class RegistrationTests extends TestBase {
 
     @Test
-    public void testSuccessfulRegistration()  {
+    public void testSuccessfulRegistration() {
         WebDriver webDriver = getDriver();
 
         SignUpPage signUpPage = new SignUpPage(webDriver);
