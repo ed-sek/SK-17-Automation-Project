@@ -256,4 +256,30 @@ public class ProfilePage extends HeaderComponent {
     }
 
 
+    public void scrollToBottomWithWaits() {
+        JavascriptExecutor js = (JavascriptExecutor) webDriver;
+        long lastHeight = (long) js.executeScript("return document.body.scrollHeight");
+
+        for (int i = 0; i < 3; i++) {
+            // Scroll to bottom
+            js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+            // Wait 5 seconds for new content to load
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            // Check if more content has loaded
+            long newHeight = (long) js.executeScript("return document.body.scrollHeight");
+            if (newHeight == lastHeight) {
+                // No more content; stop scrolling
+                break;
+            }
+            lastHeight = newHeight;
+        }
+    }
+
+
 }

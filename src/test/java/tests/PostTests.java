@@ -33,6 +33,8 @@ public class PostTests extends TestBase {
 
         Assert.assertTrue(profilePage.isUrlWithIDLoaded(VALID_USER_ID_1), "The Profile URL is not correct!");
 
+        profilePage.scrollToBottomWithWaits();
+
         int countOfPosts = profilePage.getPostCount(); // Initial count
 
         String caption = String.format("Testing create post caption: %d", countOfPosts + 1);
@@ -53,6 +55,8 @@ public class PostTests extends TestBase {
 
         Actions actions = new Actions(webDriver);
         actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform();
+
+        profilePage.scrollToBottomWithWaits();
 
         // Assert the post list container is loaded after refresh/wait
         Assert.assertTrue(profilePage.isAppPostListLoaded(), "The app post list is not loaded after refresh!");
@@ -81,6 +85,8 @@ public class PostTests extends TestBase {
 
         ProfilePage profilePage = new ProfilePage(webDriver);
         Assert.assertTrue(profilePage.isUrlWithIDLoaded(VALID_USER_ID_1), "The Profile URL is not correct!");
+
+        profilePage.scrollToBottomWithWaits();
 
         int initialPostCount = profilePage.getPostCount();
 
@@ -115,6 +121,8 @@ public class PostTests extends TestBase {
         Actions actions = new Actions(webDriver);
         actions.keyDown(Keys.CONTROL).sendKeys(Keys.END).perform();
 
+        profilePage.scrollToBottomWithWaits();
+
         int expectedPostCountAfterDelete = initialPostCount - 1;
         Assert.assertTrue(profilePage.waitForPostCountToBe(expectedPostCountAfterDelete),
                 "Post count did not update to " + expectedPostCountAfterDelete + " after deletion.");
@@ -141,6 +149,8 @@ public class PostTests extends TestBase {
         ProfilePage profilePage = new ProfilePage(webDriver);
         Assert.assertTrue(profilePage.isUrlWithIDLoaded(VALID_USER_ID_1), "Profile page did not load.");
 
+        profilePage.scrollToBottomWithWaits();
+
         int countOfPosts = profilePage.getPostCount();
 
         if (countOfPosts == 0) {
@@ -158,7 +168,9 @@ public class PostTests extends TestBase {
 
             Assert.assertTrue(profilePage.isUrlWithIDLoaded(VALID_USER_ID_1), "Profile page didn't load after creating post.");
 
-            Assert.assertTrue(profilePage.waitForPostCountToBe(1), "Post count did not become 1 after creation.");
+            profilePage.scrollToBottomWithWaits();
+
+            Assert.assertTrue(profilePage.waitForPostCountToBe(countOfPosts + 1), "Post count did not become 1 after creation.");
             countOfPosts = profilePage.getPostCount(); // Re-get count
         }
 

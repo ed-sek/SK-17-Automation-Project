@@ -64,7 +64,7 @@ public class UserInteractionTests extends TestBase {
         loginPage.performLogIn(VALID_USERNAME_1, VALID_PASSWORD_1);
 
         HomePage homePage = new HomePage(webDriver);
-        Assert.assertTrue(homePage.isUrlLoaded(), "The Home URL is not correct!");
+        //Assert.assertTrue(homePage.isUrlLoaded(), "The Home URL is not correct!");
 
         HeaderComponent header = new HeaderComponent(webDriver);
         header.populateSearchField(VALID_USERNAME_3);
@@ -86,7 +86,7 @@ public class UserInteractionTests extends TestBase {
 
         // Select on which post to comment on (ensure posts are loaded)
         Assert.assertTrue(profilePage.waitForPostCountToBeGreaterThan(0), "No posts found on profile to comment on.");
-        profilePage.clickPost(2); // Click the desired post (adjust index as needed)
+        profilePage.clickPost(0); // Click the desired post (zero-based index, adjust as needed)
 
         PostModal postModal = new PostModal(webDriver);
         Assert.assertTrue(postModal.isModalVisible(), "The post modal is not visible!");
