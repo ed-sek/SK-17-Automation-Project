@@ -33,8 +33,9 @@ public abstract class TestBase {
         cleanDirectory(REPORTS_DIR);
         cleanDirectory(SCREENSHOT_DIR);
         WebDriverManager.chromedriver().setup();
-        WebDriverManager.firefoxdriver().setup();
-        WebDriverManager.edgedriver().setup();
+        //Future-proof: Uncomment the following lines to set up other browsers
+        //WebDriverManager.firefoxdriver().setup();
+        //WebDriverManager.edgedriver().setup();
     }
 
     @BeforeMethod
